@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-aj%+d@zhto@+y6^=w5n-ue(9urbovcl)p&(d3sa4iqa$a23gf2
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['gunicorn DjangoProject.wsgi','127.0.0.1']
 
 
 # Application definition
