@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>{{ post.title }}</h2>
+  <p>{{ post.content }}</p>
+  {% if post.code_snippet %}
+    <pre>{{ post.code_snippet }}</pre>
+  {% endif %}
+  {% if post.code_file %}
+    <a href="{{ post.code_file.url }}">Download Code File</a>
+  {% endif %}
+  <h3>Answers:</h3>
+  {% for answer in answers %}
+    <p>{{ answer.content }} - by {{ answer.user.username }}</p>
+  {% endfor %}
+
+  <h3>Add an Answer</h3>
+  <form method="post" action="{% url 'add_answer' post.id %}">
+    {% csrf_token %}
+    {{ answer_form.as_p }}
+    <button type="submit">Submit</button>
+  </form>
+{% endblock %}
