@@ -1,22 +1,40 @@
 {% extends 'base.html' %}
-{% block content %}
-  <h2>{{ post.title }}</h2>
-  <p>{{ post.content }}</p>
-  {% if post.code_snippet %}
-    <pre>{{ post.code_snippet }}</pre>
-  {% endif %}
-  {% if post.code_file %}
-    <a href="{{ post.code_file.url }}">Download Code File</a>
-  {% endif %}
-  <h3>Answers:</h3>
-  {% for answer in answers %}
-    <p>{{ answer.content }} - by {{ answer.user.username }}</p>
-  {% endfor %}
 
-  <h3>Add an Answer</h3>
-  <form method="post" action="{% url 'add_answer' post.id %}">
-    {% csrf_token %}
-    {{ answer_form.as_p }}
-    <button type="submit">Submit</button>
-  </form>
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>{{ post.title }}</h2>
+    <p>{{ post.content }}</p>
+</div>
+
+<h3>Answers:</h3>
+<div class="content">
+    {% for answer in answers %}
+        <div class="card">
+            <p>{{ answer.content }}</p>
+            <p class="meta">Posted on: {{ answer.created_at }}</p>
+            
+            {% if answer.file %}
+                <p><a href="{{ answer.file.url }}" download>Download Attached File</a></p>
+            {% endif %}
+        </div>
+    {% empty %}
+        <p>No answers yet. Be the first to respond!</p>
+    {% endfor %}
+</div>
+
+<h3>Your Answer:</h3>
+<div class="card">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="content">Answer:</label>
+        {{ form.content }}
+        
+        <label for="file">Attach a file (optional):</label>
+        {{ form.file }}
+        
+        <input type="submit" value="Submit Answer">
+    </form>
+</div>
 {% endblock %}

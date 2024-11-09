@@ -28,8 +28,18 @@ def create_post(request):
 def post_detail(request, post_id):
     post = get_object_or_404(Post, id=post_id)
     answers = post.answers.all()
-    answer_form = AnswerForm()
-    return render(request, 'post_detail.html', {'post': post, 'answers': answers, 'answer_form': answer_form})
+    
+    if request.method == 'POST':
+        form = AnswerForm(request.POST, request.FILES)  # Add request.FILES for file handling
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.post = post
+            answer.save()
+            return redirect('post_detail', post_id=post.id)
+    else:
+        form = AnswerForm()
+    
+    return render(request, 'post_detail.html', {'post': post, 'answers': answers, 'form': form})
 
 # Add an answer to a post
 @login_required
