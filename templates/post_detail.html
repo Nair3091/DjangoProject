@@ -6,6 +6,11 @@
 <div class="card">
     <h2>{{ post.title }}</h2>
     <p>{{ post.content }}</p>
+    
+    {% if post.file %}
+        <!-- Download link for the post's file if uploaded -->
+        <p><strong>Download Code File:</strong> <a href="{{ post.file.url }}" download>{{ post.file.name }}</a></p>
+    {% endif %}
 </div>
 
 <h3>Answers:</h3>
@@ -16,6 +21,7 @@
             <p class="meta">Posted on: {{ answer.created_at }}</p>
             
             {% if answer.file %}
+                <!-- Download link for any file attached to the answer -->
                 <p><a href="{{ answer.file.url }}" download>Download Attached File</a></p>
             {% endif %}
         </div>
