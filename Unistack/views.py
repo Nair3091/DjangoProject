@@ -71,3 +71,6 @@ def register(request):
         messages.error(request, 'Registration failed. Please check the details and try again.')
     form = UserCreationForm()
     return render(request, 'register.html', {'form': form})
+
+def logout_view(request):
+    return redirect('login')  # Redirect to the login page

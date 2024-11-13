@@ -133,3 +133,4 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
   # Redirect to home page after logout
 
 LOGOUT_REDIRECT_URL = '/' 
+LOGIN_REDIRECT_URL = '/'  # Or another URL where you want users to land after login
